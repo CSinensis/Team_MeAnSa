@@ -1,4 +1,4 @@
-package com.example.homescreen.ui.theme
+package com.example.homescreen.ui
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

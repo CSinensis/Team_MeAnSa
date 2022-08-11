@@ -1,4 +1,4 @@
-package com.example.homescreen.ui.theme
+package com.example.homescreen.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

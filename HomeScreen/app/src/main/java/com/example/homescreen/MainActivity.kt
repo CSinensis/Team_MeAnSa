@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.homescreen.ui.theme.HomeScreenTheme
+import com.example.homescreen.ui.HomeScreenTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -22,4 +22,5 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 

@@ -17,9 +17,14 @@ fun SetupNavGraph(navController: NavHostController){
             HomeScreen(navController = navController)
         }
         composable(
-            route = Screen.Detail.route
+            route = Screen.IngList.route
         ){
-            DetailScreen()
+            ProductListCurrentScreen(navController = navController)
+        }
+        composable(
+            route = Screen.IngredientInfo.route
+        ){
+            IngredientInfo(navController = navController)
         }
 
     }

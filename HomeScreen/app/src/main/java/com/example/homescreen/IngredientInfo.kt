@@ -15,27 +15,25 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 
-fun HomeScreen(navController: NavController){
+fun IngredientInfo(navController: NavController){
     Box(modifier = Modifier.fillMaxSize(),
-    contentAlignment = Alignment.Center)
+        contentAlignment = Alignment.Center)
     {
         Column(){
             Text(
                 modifier = Modifier.clickable {
-                    println("hello")
                     navController.navigate(route = Screen.IngList.route)
                 },
-                text = "Home",
+                text = "Ingredient Name:",
                 color = MaterialTheme.colors.primary,
                 fontSize = MaterialTheme.typography.h3.fontSize,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 modifier = Modifier.clickable {
-                    println("hello")
-                    navController.navigate(route = Screen.IngredientInfo.route)
+                    navController.navigate(route = Screen.Home.route)
                 },
-                text = "Ingredient",
+                text = "Home",
                 color = MaterialTheme.colors.primary,
                 fontSize = MaterialTheme.typography.h3.fontSize,
                 fontWeight = FontWeight.Bold
@@ -46,8 +44,8 @@ fun HomeScreen(navController: NavController){
 
 @Composable
 @Preview(showBackground = true)
-fun HomeScreenPreview(){
-    HomeScreen(
+fun IngredientInfoPreview(){
+    IngredientInfo(
         navController = rememberNavController()
     )
 }
