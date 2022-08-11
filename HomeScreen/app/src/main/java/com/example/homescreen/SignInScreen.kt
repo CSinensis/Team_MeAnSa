@@ -1,8 +1,5 @@
-package com.example.signinscreen
+package com.example.homescreen
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,8 +22,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.signinscreen.ui.theme.MainColor
-import com.example.signinscreen.ui.theme.SignInScreenTheme
 
 @Composable
 fun SignInScreen() {
@@ -105,7 +100,7 @@ fun SignInScreen() {
                             onClick = {},
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
-                            colors = ButtonDefaults.buttonColors(backgroundColor = MainColor)
+                            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant)
                         ) {
                             Text(text = "Log In")
                         }
@@ -115,7 +110,7 @@ fun SignInScreen() {
                             horizontalArrangement = Arrangement.SpaceBetween
                         ){
                             TextButton(onClick = {}) {
-                                Text(text = "Sign Up", color = MainColor)
+                                Text(text = "Sign Up", color = MaterialTheme.colors.primaryVariant)
                             }
                             TextButton(onClick = {/*TODO*/}) {
                                 Text(text = "Forgot Password?", color = Color.Gray)

@@ -21,9 +21,18 @@ object Model{
 }
 
 
-
 data class Ingredient (
     val productName: String,
     val productQuantity: Long,
     val carbonFootprint: Long
 )
+
+
+object Addables{
+    val add1 = Addable("beef", R.drawable.beef)
+}
+
+data class Addable (
+    val name: String,
+    val ID: Int
+        )

@@ -1,9 +1,5 @@
 package com.example.signinscreen
 
-import android.media.Image
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,21 +7,18 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material.TopAppBar
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
-import com.example.signinscreen.ui.theme.MainColor
+import com.example.homescreen.R
+
 
 //class AddIngredient : ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +38,7 @@ fun AddStuff() {
                 onSearchClicked = {}
             )
         }
+    
     ){}
 
 //   Add Eggs and Bacon
@@ -216,7 +210,7 @@ fun AddStuff() {
         Button(
             onClick = {},
             shape = CutCornerShape(10),
-            colors = ButtonDefaults.buttonColors(backgroundColor = MainColor))
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant))
 
         {
             Text(text = "Add Items to Shopping List",color = Color.White) }
@@ -228,7 +222,7 @@ fun AddStuff() {
 @Composable
 fun AppBar(onSearchClicked: () -> Unit){
     TopAppBar(
-        backgroundColor = MainColor,
+        backgroundColor = MaterialTheme.colors.primaryVariant,
     ) {
         Column(
             modifier = Modifier
