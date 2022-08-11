@@ -38,7 +38,7 @@ fun AddStuff() {
                 onSearchClicked = {}
             )
         }
-    
+
     ){}
 
 //   Add Eggs and Bacon

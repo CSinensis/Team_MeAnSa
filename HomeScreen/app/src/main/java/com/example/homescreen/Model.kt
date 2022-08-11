@@ -30,6 +30,7 @@ data class Ingredient (
 
 object Addables{
     val add1 = Addable("beef", R.drawable.beef)
+    var addableList: List<Addable> = mutableStateListOf(add1)
 }
 
 data class Addable (
