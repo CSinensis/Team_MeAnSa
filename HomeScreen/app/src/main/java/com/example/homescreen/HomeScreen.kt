@@ -33,7 +33,7 @@ fun HomeScreen(navController: NavController){
             Text(
                 modifier = Modifier.clickable {
                     println("hello")
-                    navController.navigate(route = Screen.IngredientInfo.route)
+                    navController.navigate(route = Screen.IngredientInfo.passID(0))
                 },
                 text = "Ingredient",
                 color = MaterialTheme.colors.primary,

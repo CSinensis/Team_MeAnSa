@@ -22,9 +22,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(navController: NavController) {
     var username by remember {
         mutableStateOf("")
     }
@@ -97,7 +99,7 @@ fun SignInScreen() {
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
-                            onClick = {},
+                            onClick = {navController.navigate(route = Screen.Profile.route)},
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant)
@@ -112,7 +114,7 @@ fun SignInScreen() {
                             TextButton(onClick = {}) {
                                 Text(text = "Sign Up", color = MaterialTheme.colors.primaryVariant)
                             }
-                            TextButton(onClick = {/*TODO*/}) {
+                            TextButton(onClick = {}) {
                                 Text(text = "Forgot Password?", color = Color.Gray)
                             }
                         }
@@ -132,5 +134,5 @@ fun SignInScreen() {
 @Preview(showBackground = true)
 @Composable
 fun SignInScreenPreview() {
-    SignInScreen()
+    SignInScreen(navController = rememberNavController())
 }

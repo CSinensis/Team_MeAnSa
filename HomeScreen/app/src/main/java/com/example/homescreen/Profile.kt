@@ -22,11 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.homescreen.R
 
 
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(navController: NavController){
     val notification = rememberSaveable{ mutableStateOf("")}
     if (notification.value.isNotEmpty()){
         Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_LONG).show()
@@ -238,5 +240,5 @@ fun Challenge(){
 
 @Composable
 fun ProfilePreview() {
-    ProfileScreen()
+    ProfileScreen(navController = rememberNavController())
 }

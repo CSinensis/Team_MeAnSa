@@ -2,9 +2,12 @@ package com.example.homescreen
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.signinscreen.ProfileScreen
 
 
 @Composable
@@ -22,9 +25,30 @@ fun SetupNavGraph(navController: NavHostController){
             ProductListCurrentScreen(navController = navController)
         }
         composable(
-            route = Screen.IngredientInfo.route
+            route = Screen.IngredientInfo.route,
+            arguments = listOf(navArgument(ING_INDEX){
+                type = NavType.IntType
+            })
         ){
-            IngredientInfo(navController = navController)
+            val index = it.arguments?.getInt(ING_INDEX)
+            if (index != null) {
+                IngredientInfo(navController = navController,ING_INDEX = index)
+            }
+        }
+        composable(
+            route = Screen.SignIn.route
+        ){
+            SignInScreen(navController = navController)
+        }
+        composable(
+            route = Screen.Profile.route
+        ){
+            ProfileScreen(navController = navController)
+        }
+        composable(
+            route = Screen.AddIngredient.route
+        ){
+            AddStuff(navController = navController)
         }
 
     }
