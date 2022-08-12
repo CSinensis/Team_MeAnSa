@@ -81,211 +81,136 @@ fun ProfileScreen(navController: NavController,scaffoldState: ScaffoldState = re
                 backgroundColor = MaterialTheme.colors.primaryVariant,
             )
         },
-        content = {Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(8.dp)
-        ){
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(8.dp),
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ){
-//            Text(
-//                text = "Cancel",
-//                modifier = Modifier.clickable{"Cancelled"})
-//            Text(
-//                text = "Save",
-//                modifier = Modifier.clickable{"Profile Updated"}
-//            )
-//
-//        }
-            ProfileImage()
-            ProgressBar()
-            Challenge()
+//        Start here with setting the top profile's image + info
+        content = {modifier = Modifier.padding(15.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(13.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    // User's image
+                    Image(
+                        modifier = Modifier
+                            .size(98.dp)
+                            .clip(shape = CircleShape),
+                        painter = painterResource(id = R.drawable.profile_image),
+                        contentDescription = "Your Image"
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(weight = 3f, fill = false)
+                                .padding(start = 16.dp)
+                        ) {
+
+                            // User's name
+                            Text(
+                                text = person1.name,
+                                style = TextStyle(
+                                    fontSize = 25.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Spacer(modifier = Modifier.height(2.dp))
+                            // Username
+                            Text(
+                                text = person1.username,
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    color = Color.Gray,
+                                    letterSpacing = (0.8).sp
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Row() {
+                                Text(
+                                    text = person1.achievement,
+                                    style = TextStyle(
+                                        fontSize = 13.sp,
+                                        fontStyle = FontStyle.Italic,
+                                        letterSpacing = (0.8).sp
+                                    )
+                                )
+                                Icon(
+                                    imageVector = Icons.Filled.Face,
+                                    tint = Color.Black,
+                                    contentDescription = "Localized description",
+                                    modifier = Modifier.padding(end = 4.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+                ProgressBar()
+                Challenge()
+            }
             }
         }
     )
 }
 
 @Composable
-fun ProfileImage(person: Person) {
-    val painter = painterResource(R.drawable.user_image)
-    var name by rememberSaveable { mutableStateOf("Type here") }
-    var username by rememberSaveable { mutableStateOf("Type here") }
-    var achievement by rememberSaveable { mutableStateOf("Type here") }
-
-//    Column(modifier = Modifier
-//        .padding(8.dp)
-//        .fillMaxWidth(),
-//    horizontalAlignment = Alignment.CenterHorizontally
-//    ){
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Card(
-            shape = CircleShape,
-            modifier = Modifier
-                .padding(8.dp)
-                .size(100.dp),
-            border = BorderStroke(1.dp, Color.DarkGray)
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .clickable {},
-                contentScale = ContentScale.Crop
-            )
-
-        }
-        Column() {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize(),
-//                .padding(start = 4.dp, end = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = person.name, modifier = Modifier.width(100.dp))
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    trailingIcon = {
-                        IconButton(onClick = { name = "" }) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
-                    }
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Username", modifier = Modifier.width(100.dp))
-                OutlinedTextField(
-                    value = username,
-                    onValueChange = { username = it },
-                    trailingIcon = {
-                        IconButton(onClick = { username = "" }) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
-                    }
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Achievements", modifier = Modifier.width(100.dp))
-                OutlinedTextField(
-                    value = achievement,
-                    onValueChange = { achievement = it },
-                    trailingIcon = {
-                        IconButton(onClick = { achievement = "" }) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
-                    }
-                )
-            }
-        }
-    }
-}
-
-@Composable
 fun ProgressBar(){
     Column(modifier = Modifier
-        .padding(20.dp)
+        .padding(15.dp)
         .fillMaxWidth(),
-    horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Your Weekly Carbon Impact",
             fontWeight = FontWeight.Bold, fontSize = 20.sp)}
-        LinearProgressIndicator(
-            progress = 0.7f,
-            color = MaterialTheme.colors.primaryVariant,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(15.dp),
-            backgroundColor = Color.LightGray
-        )
+    LinearProgressIndicator(
+        progress = 0.7f,
+        color = MainColor,
+        modifier = Modifier
+            .fillMaxWidth(0.85f)
+            .height(15.dp),
+        backgroundColor = Color.LightGray
+    )
+//    Set the limit
+    Text(
+        text = "60lbs",
+        fontWeight = FontWeight.Bold,
+        color = Color.Red,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 5.dp, start = 320.dp)
+    )
 }
 
 @Composable
-fun Challenge(){
-    Column(modifier = Modifier
-        .padding(15.dp)
-        .fillMaxSize(),
-//    horizontalAlignment = Alignment.CenterHorizontally
+fun SetChallenges(model: Challenge) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
     ) {
-        Divider(
-            color = Color.Black,
-            thickness = 2.dp,
-            modifier = Modifier
-                .padding(15.dp)
+        val checkedStatus = remember {
+            mutableStateOf(false)
+        }
+        Checkbox(
+            checked = checkedStatus.value,
+            onCheckedChange = { checkedStatus.value = it },
+            modifier = Modifier.padding(1.dp)
         )
         Text(
-            text = "Your Challenges:",
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            text = model.title,
+            fontSize = 19.sp,
+            color = Color.Black
         )
-        Column() {
-            Row(){
-            val checkedStatus1 = remember {
-                mutableStateOf(false)
-            }
-            Checkbox(
-                checked = checkedStatus1.value,
-                onCheckedChange = { checkedStatus1.value = it },
-                modifier = Modifier.padding(5.dp)
-            )
-            Text(
-                text = "Recycle leftovers from Denny’s",
-                modifier = Modifier.padding(15.dp),
-                fontSize = 18.sp
-            )}
-            Row(){
-            val checkedStatus2 = remember {
-                mutableStateOf(false)
-            }
-            Checkbox(
-                checked = checkedStatus2.value,
-                onCheckedChange = { checkedStatus2.value = it },
-                modifier = Modifier.padding(5.dp)
-            )
-            Text(
-                text = "Turn off lights when not using",
-                modifier = Modifier.padding(15.dp),
-                fontSize = 18.sp
-            )}
-            Row(){
-                val checkedStatus3 = remember {
-                    mutableStateOf(false)
-                }
-                Checkbox(
-                    checked = checkedStatus3.value,
-                    onCheckedChange = { checkedStatus3.value = it },
-                    modifier = Modifier.padding(5.dp)
-                )
-                Text(
-                    text = "Bring reusable bag to the supermarket",
-                    modifier = Modifier.padding(15.dp),
-                    fontSize = 18.sp
-                )
-            }
-            Button(modifier = Modifier.fillMaxSize(),
-                onClick = {},
-                shape = CutCornerShape(10),
-                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant))
-
-            {
-                Text(text = "Add Challenges to Yourself",color = Color.White)}
-        }
     }
 }
 

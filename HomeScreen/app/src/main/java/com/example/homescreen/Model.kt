@@ -66,18 +66,33 @@ data class Addable (
 data class Person(
     val name: String,
     val username: String,
-    val challenges: List<Challenge>,
+    val achievement: String,
 )
 
 data class Challenge(
     val title: String,
-    val complete: Boolean
+//    val complete: Boolean
 )
 
 object Challenges{
-    var challenge1 = Challenge("clean up", true)
+    var challenge1 = Challenge("Recycle leftovers from Denny’s")
+    var challenge2 = Challenge("Bring reusable bag to the supermarket")
+    var challenge3 = Challenge("Recycle waste")
+    var challenge4 = Challenge("Cook at home with a meal plan")
+    var challenge5 = Challenge("Eat more plant-based protein")
+    var challenge6 = Challenge("Not using individually-wrapped produce for a week")
+
+    // first person
+    var ChallengeList1: List<Challenge> = mutableStateListOf(challenge1, challenge2, challenge3, challenge4, challenge5)
+    //    second person
+    var ChallengeList2: List<Challenge> = mutableStateListOf(challenge5, challenge6)
+
+
+
 }
 
 object People{
-    var person1 = Person("Anh Thach", "hi",listOf(Challenges.challenge1))
+    var person1 = Person("Archana Chaudhary", "achaudhary0204","I recycle leftovers every week!")
+    var person2 = Person("MeAnSa", "meansa2025","Bring personal bag when buying foods")
+
 }
