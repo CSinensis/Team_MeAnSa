@@ -2,6 +2,8 @@ package com.example.homescreen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -12,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,84 +35,95 @@ import androidx.navigation.compose.rememberNavController
 fun AddStuff(navController: NavController) {
     var newIngName by remember { mutableStateOf("")}
     var newIngQuant by remember { mutableStateOf("")}
+    var addList = remember{ Addables.addableList.toMutableStateList<Addable>()}
 //    Questions "Which items you want to add?"
     Scaffold(
         topBar = {
             AppBar(
                 onSearchClicked = {}
             )
-        }
-
-    ){}
-
-//        Lazy Column for adding Ingre
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        items(addableList) { model ->
-            com.example.signinscreen.ui.theme.ListRow(model = model)
-        }
-    }
-        Box(
-            Modifier
-                .size(400.dp, 220.dp)
-                .padding(top = 5.dp)
-                // on below line we are adding background color
-                .background(MaterialTheme.colors.primaryVariant, RoundedCornerShape(10.dp))
-                // on below line we are adding border.
-                .border(1.dp, color = Color.LightGray, RoundedCornerShape(10.dp))
-        ){
-            Column(verticalArrangement = Arrangement.SpaceEvenly){
-                Text(
-                    text = "Add Custom Ingredient",
-                    modifier = Modifier.padding(start = 10.dp,top = 10.dp),
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 10.dp, vertical = 10.dp),
-                    value = newIngName,
-                    onValueChange = {newIngName = it},
-                    label = { Text(text = "Produce Name") },
-                    colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.White
-                    ),
-                    trailingIcon = {
-                        IconButton(onClick = {newIngName = ""}) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
+        },
+        content = {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment =  Alignment.CenterHorizontally
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White)
+                        .height(480.dp)
+                ) {
+                    itemsIndexed(addList){ _, model ->
+                        ListRow(model = model)
                     }
-                )
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 10.dp, vertical = 10.dp),
-                    value = newIngQuant,
-                    onValueChange = {newIngQuant = it},
-                    label = { Text(text = "Quantity (g)") },
-                    colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.White
-                    ),
-                    trailingIcon = {
-                        IconButton(onClick = {newIngQuant = ""}) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
+                }
+                Box(
+                    Modifier
+                        .size(400.dp, 220.dp)
+                        .padding(top = 5.dp)
+                        // on below line we are adding background color
+                        .background(MaterialTheme.colors.primaryVariant, RoundedCornerShape(10.dp))
+                        // on below line we are adding border.
+                        .border(1.dp, color = Color.LightGray, RoundedCornerShape(10.dp))
+                ){
+                    Column(verticalArrangement = Arrangement.SpaceEvenly){
+                        Text(
+                            text = "Add Custom Ingredient",
+                            modifier = Modifier.padding(start = 10.dp,top = 10.dp),
+                            color = Color.White,
+                            fontSize = 20.sp
+                        )
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp, vertical = 10.dp),
+                            value = newIngName,
+                            onValueChange = {newIngName = it},
+                            label = { Text(text = "Produce Name") },
+                            colors = TextFieldDefaults.textFieldColors(
+                                backgroundColor = Color.White
+                            ),
+                            trailingIcon = {
+                                IconButton(onClick = {newIngName = ""}) {
+                                    Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                }
+                            }
+                        )
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp, vertical = 10.dp),
+                            value = newIngQuant,
+                            onValueChange = {newIngQuant = it},
+                            label = { Text(text = "Quantity (g)") },
+                            colors = TextFieldDefaults.textFieldColors(
+                                backgroundColor = Color.White
+                            ),
+                            trailingIcon = {
+                                IconButton(onClick = {newIngQuant = ""}) {
+                                    Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                }
+                            }
+                        )
                     }
-                )
+                }
+                Button(
+                    onClick = {editIngList(newIngName,newIngQuant)
+                        newIngName = ""
+                        newIngQuant = ""},
+                    shape = CutCornerShape(10),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant))
+                {
+                    Text(text = "Add Items to Shopping List",color = Color.White) }
             }
+
         }
-        Button(
-            onClick = {editIngList(newIngName,newIngQuant)
-                newIngName = ""
-                newIngQuant = ""},
-            shape = CutCornerShape(10),
-            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primaryVariant))
-        {
-            Text(text = "Add Items to Shopping List",color = Color.White) }
+
+    )
+
     }
-        }
+
 
 fun editIngList(newIngName: String,newIngQuant: String){
     val newQuant = newIngQuant.toLong()
@@ -181,7 +195,7 @@ fun ListRow(model: Addable) {
         )
     }
 }
-}
+
 
 @Preview(showBackground = true)
 @Composable

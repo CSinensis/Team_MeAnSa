@@ -62,3 +62,22 @@ data class Addable (
     val name: String,
     val drawableID: Int
 )
+
+data class Person(
+    val name: String,
+    val username: String,
+    val challenges: List<Challenge>,
+)
+
+data class Challenge(
+    val title: String,
+    val complete: Boolean
+)
+
+object Challenges{
+    var challenge1 = Challenge("clean up", true)
+}
+
+object People{
+    var person1 = Person("Anh Thach", "hi",listOf(Challenges.challenge1))
+}
