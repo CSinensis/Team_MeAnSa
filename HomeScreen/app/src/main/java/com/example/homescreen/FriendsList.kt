@@ -132,36 +132,30 @@ fun FriendsListCurrentScreen(
                                                 .clickable {},
                                             contentScale = ContentScale.Crop
                                         )
-                                        Text(
-                                            text = item.name,
-                                            modifier = Modifier
-                                                .weight(1f)
-                                                .align(Alignment.CenterVertically)
-                                                .padding(8.dp)
-                                        )
-                                        Text(
-                                            text = item.productQuantity.toString(),
-                                            modifier = Modifier
-                                                .weight(1f)
-                                                .align(Alignment.CenterVertically)
-                                                .padding(8.dp)
-                                        )
-                                        Text(
-                                            text = item.carbonFootprint.toString(),
-                                            modifier = Modifier
-                                                .weight(1f)
-                                                .align(Alignment.CenterVertically)
-                                                .padding(8.dp)
-                                        )
-                                        Column(horizontalAlignment = Alignment.End) {
-                                            IconButton(onClick = {
-                                                ingrList.remove(item)
-                                                Model.IngList = ingrList}) {
-                                                Icon(
-                                                    ImageVector.vectorResource(R.drawable.ic_delete_forever_black_24dp),
-                                                    ""
-                                                )
-                                            }
+                                        Column (horizontalAlignment = Alignment.End){
+                                            Text(
+                                                text = item.name,
+                                                modifier = Modifier
+                                                    .weight(1f)
+                                                    .align(Alignment.CenterVertically)
+                                                    .padding(8.dp)
+                                            )
+                                            Text(
+                                                text = item.distance.toString() + "miles",
+                                                modifier = Modifier
+                                                    .weight(1f)
+                                                    .align(Alignment.CenterVertically)
+                                                    .padding(8.dp)
+                                            )
+                                        }
+                                        Button(
+                                            onClick = {navController.navigate(route = Screen.IngRequest.route)},
+                                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)){
+                                            Text(
+                                                text = "Request Ingredient",
+                                                style = TextStyle(fontSize = 15.sp),
+                                                color = Color.White
+                                            )
                                         }
                                     }
                                 }
@@ -170,155 +164,18 @@ fun FriendsListCurrentScreen(
                     }
                 }
             }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {navController.navigate(route = Screen.AddIngredient.route)},
-                backgroundColor = MaterialTheme.colors.secondary,
-                contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
-                content = { Icon(ImageVector.vectorResource(R.drawable.plus), "") }
-            )
-
         }
     )
 }
 
-//@Composable
-//private fun ScreenBody() {
-//    when (val result = AmbientScreenState.current.productListUi) {
-//        is ResultStatus.Loading -> LoadingScreen()
-//        is ResultStatus.Success -> SuccessScreen(result.data)
-//        is ResultStatus.Error -> ErrorScreen()
-//    }
-//}
-
-//@Composable
-//private fun LoadingScreen() {
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ) { CircularProgressIndicator() }
-//}
-
-//@Composable
-//private fun SuccessScreen(productList: List<Ingredient>?) {
-//
-//    Column(
-//        Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp, 8.dp, 8.dp, 96.dp)
-//            .verticalScroll(rememberScrollState())
-//    ) {
-//        productList?.forEach { post -> ProductCurrentItem(post) }
-//    }
-//}
 
 
-//@Composable
-//private fun ErrorScreen() {
-//    EmptyScreen(
-//        R.string.empty_view_product_list_title,
-//        R.string.empty_view_product_list_subtitle_text
-//    )
-//}
 
-@Composable
-private fun Fab() {
-    val openDialog = remember{mutableStateOf(true) }
-    FloatingActionButton(
-        onClick = {},
-        backgroundColor = MaterialTheme.colors.secondary,
-        contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
-        content = { Icon(ImageVector.vectorResource(R.drawable.plus), "") }
-    )
-}
-
-
-// on below line we are creating a pop up window dialog method
-@Composable
-fun PopupWindowDialog() {
-    val openDialog = remember{mutableStateOf(false) }
-    val buttonTitle = remember{mutableStateOf("Show Pop Up")}
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            onClick = {
-                openDialog.value = !openDialog.value
-                if (!openDialog.value) {
-                    buttonTitle.value = "Show Pop Up"
-                }
-            }
-        ) {
-            Text(text = buttonTitle.value, modifier = Modifier.padding(3.dp))
-        }
-        Box {
-            val popupWidth = 300.dp
-            val popupHeight = 100.dp
-            if (openDialog.value) {
-                buttonTitle.value = "Hide Pop Up"
-                // on below line we are adding pop up
-                Popup(
-                    // on below line we are adding
-                    // alignment and properties.
-                    alignment = Alignment.TopCenter,
-                    properties = PopupProperties()
-                ) {
-
-                    // on the below line we are creating a box.
-                    Box(
-                        // adding modifier to it.
-                        Modifier
-                            .size(popupWidth, popupHeight)
-                            .padding(top = 5.dp)
-                            // on below line we are adding background color
-                            .background(
-                                MaterialTheme.colors.primaryVariant,
-                                RoundedCornerShape(10.dp)
-                            )
-                            // on below line we are adding border.
-                            .border(1.dp, color = Color.Black, RoundedCornerShape(10.dp))
-                    ) {
-
-                        // on below line we are adding column
-                        Column(
-                            // on below line we are adding modifier to it.
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 20.dp),
-                            // on below line we are adding horizontal and vertical
-                            // arrangement to it.
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            // on below line we are adding text for our pop up
-                            Text(
-                                text = "Welcome to Geeks for Geeks",
-                                color = Color.White,
-                                // on below line we are adding padding to it
-                                modifier = Modifier.padding(vertical = 5.dp),
-                                // on below line we are adding font size.
-                                fontSize = 16.sp
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 
 @Composable
 @Preview(showBackground = true)
-fun IngListPreview(){
-    IngList(navController = rememberNavController())
-    ProductListCurrentScreen(navController = rememberNavController())
+fun FriendsListPreview(){
+    FriendsList(navController = rememberNavController())
+    FriendsListCurrentScreen(navController = rememberNavController())
 }
