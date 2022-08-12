@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,55 +26,121 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.homescreen.R
+import com.example.homescreen.Screen
 
 
 @Composable
-fun ProfileScreen(navController: NavController){
+fun ProfileScreen(navController: NavController,scaffoldState: ScaffoldState = rememberScaffoldState()){
     val notification = rememberSaveable{ mutableStateOf("")}
     if (notification.value.isNotEmpty()){
         Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_LONG).show()
         notification.value = ""
     }
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .padding(8.dp)
-    ){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ){
-            Text(
-                text = "Cancel",
-                modifier = Modifier.clickable{"Cancelled"})
-            Text(
-                text = "Save",
-                modifier = Modifier.clickable{"Profile Updated"}
-            )
+    var name by rememberSaveable{ mutableStateOf("default name")}
+    var username by rememberSaveable{mutableStateOf("default username")}
+    Scaffold(scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                modifier = Modifier.fillMaxWidth(),
+                title = {
+                    Row(modifier = Modifier
+                        .fillMaxWidth().fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly
 
+                    ) {
+                        Button(
+                            onClick = {navController.navigate(route = Screen.Profile.route)},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)){
+                            Text(
+                                text = "Profile",
+                                style = TextStyle(fontSize = 15.sp),
+                                color = Color.Black
+                            )
+                        }
+                        Button(
+                            onClick = {navController.navigate(route = Screen.IngList.route)},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)) {
+                            Text(
+                                text = "Shopping List",
+                                style = TextStyle(fontSize = 15.sp),
+                                color = Color.White
+                            )
+                        }
+                        Button(
+                            onClick = {navController.navigate(route = Screen.Profile.route)},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)) {
+                            Text(
+                                text = "Friends List",
+                                style = TextStyle(fontSize = 15.sp),
+                                color = Color.White
+                            )
+                        }
+                    }
+                    Text(text = stringResource(id = R.string.app_name)) },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+            )
+        },
+        content = {Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(8.dp)
+        ){
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(8.dp),
+//            horizontalArrangement = Arrangement.SpaceBetween
+//        ){
+//            Text(
+//                text = "Cancel",
+//                modifier = Modifier.clickable{"Cancelled"})
+//            Text(
+//                text = "Save",
+//                modifier = Modifier.clickable{"Profile Updated"}
+//            )
+//
+//        }
+            ProfileImage()
+            Row(
+                modifier = Modifier
+                    .fillMaxSize(),
+//                .padding(start = 4.dp, end = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "Name", modifier = Modifier.width(100.dp))
+                TextField(value = name, onValueChange = {name = it})
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, end = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "Username", modifier = Modifier.width(100.dp))
+                TextField(value = username, onValueChange = {name = it})
+            }
+            ProgressBar()
+            Challenge()
+            }
         }
-        ProfileImage()
-        ProgressBar()
-        Challenge()
-    }
+    )
 }
 
 @Composable
 fun ProfileImage(){
     val painter = painterResource(R.drawable.user_image)
-    var name by rememberSaveable{ mutableStateOf("Type here")}
-    var username by rememberSaveable{mutableStateOf("Type here")}
-    var achievement by rememberSaveable{mutableStateOf("Type here")}
-    Row(verticalAlignment = Alignment.CenterVertically
+
+    Column(modifier = Modifier
+        .padding(8.dp)
+        .fillMaxWidth(),
+    horizontalAlignment = Alignment.CenterHorizontally
     ){
         Card(
             shape = CircleShape,
             modifier = Modifier
                 .padding(8.dp)
-                .size(100.dp),
-            border = BorderStroke(1.dp,Color.DarkGray)
+                .size(70.dp)
         ){
             Image(
                 painter = painter,
@@ -85,57 +152,8 @@ fun ProfileImage(){
             )
 
         }
-        Column() {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize(),
-//                .padding(start = 4.dp, end = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = "Name", modifier = Modifier.width(100.dp))
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = {name = it},
-                    trailingIcon = {
-                        IconButton(onClick = {name = ""}) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
-                    }
-                )
-            }
-
-            Row( modifier = Modifier
-                .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = "Username", modifier = Modifier.width(100.dp))
-                OutlinedTextField(
-                    value = username,
-                    onValueChange = {username = it},
-                    trailingIcon = {
-                        IconButton(onClick = {username = ""}) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
-                    }
-                )
-            }
-            Row(modifier = Modifier
-                .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = "Achievements", modifier = Modifier.width(100.dp))
-                OutlinedTextField(
-                    value = achievement,
-                    onValueChange = {achievement = it},
-                    trailingIcon = {
-                        IconButton(onClick = {achievement = ""}) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                        }
-                    }
-                )
-            }
-        }
-
+    }
+}
 @Composable
 fun ProgressBar(){
     Column(modifier = Modifier

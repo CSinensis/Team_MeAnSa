@@ -8,8 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -52,47 +51,48 @@ fun ProductListCurrentScreen(
     var ingrList = remember{ Model.IngList.toMutableStateList<Ingredient>()}
     val openDialog = remember{mutableStateOf(false)}
     var newIngName by remember { mutableStateOf("")}
-    if (openDialog.value){
-        Popup(alignment = Alignment.Center,
-            properties = PopupProperties()){
-            Box(
-                Modifier
-                    .size(300.dp, 100.dp)
-                    .padding(top = 5.dp)
-                    // on below line we are adding background color
-                    .background(MaterialTheme.colors.primaryVariant, RoundedCornerShape(10.dp))
-                    // on below line we are adding border.
-                    .border(1.dp, color = Color.LightGray, RoundedCornerShape(10.dp))
-            ){
-                Column(){
-                    OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth()
-                            .padding(horizontal = 10.dp, vertical = 10.dp)
-                            .background(Color.White),
-                        value = newIngName,
-                        onValueChange = {newIngName = it},
-                        label = { Text(text = "Produce Name") },
-                        trailingIcon = {
-                            IconButton(onClick = {newIngName = ""}) {
-                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                            }
-                        }
-                    )
-                }
-            }
-        }
-    }
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.app_name)) },
-                backgroundColor = MaterialTheme.colors.primary,
-                navigationIcon = {
-                    IconButton(onClick = {navController.navigate(route = Screen.Home.route)}) {
-                        Icon(ImageVector.vectorResource(R.drawable.arrow), "")
+                modifier = Modifier.fillMaxWidth(),
+                title = {
+                    Row(modifier = Modifier
+                        .fillMaxWidth().fillMaxSize(),
+                    verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly
+
+                ) {
+                    Button(
+                        onClick = {navController.navigate(route = Screen.Profile.route)},
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)){
+                        Text(
+                            text = "Profile",
+                            style = TextStyle(fontSize = 15.sp),
+                            color = Color.White
+                        )
+                    }
+                    Button(
+                        onClick = {navController.navigate(route = Screen.IngList.route)},
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
+                        Text(
+                            text = "Shopping List",
+                            style = TextStyle(fontSize = 15.sp),
+                            color = Color.Black
+                        )
+                    }
+                    Button(
+                        onClick = {navController.navigate(route = Screen.Profile.route)},
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)) {
+                        Text(
+                            text = "Friends List",
+                            style = TextStyle(fontSize = 15.sp),
+                            color = Color.White
+                        )
                     }
                 }
+                    Text(text = stringResource(id = R.string.app_name)) },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
             )
         },
         content = {
