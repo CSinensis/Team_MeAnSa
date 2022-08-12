@@ -18,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 fun IngredientInfo(navController: NavController, ING_INDEX: Int){
     val item = Model.IngList[ING_INDEX]
     val name = item.productName
-    
+
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center)
     {

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,10 +26,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.homescreen.R
+import com.example.homescreen.Screen
 
 
 @Composable
-fun ProfileScreen(navController: NavController){
+fun ProfileScreen(navController: NavController,scaffoldState: ScaffoldState = rememberScaffoldState()){
     val notification = rememberSaveable{ mutableStateOf("")}
     if (notification.value.isNotEmpty()){
         Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_LONG).show()
@@ -36,83 +38,93 @@ fun ProfileScreen(navController: NavController){
     }
     var name by rememberSaveable{ mutableStateOf("default name")}
     var username by rememberSaveable{mutableStateOf("default username")}
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .padding(8.dp)
-    ){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ){
-            Text(
-                text = "Cancel",
-                modifier = Modifier.clickable{"Cancelled"})
-            Text(
-                text = "Save",
-                modifier = Modifier.clickable{"Profile Updated"}
-            )
+    Scaffold(scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                modifier = Modifier.fillMaxWidth(),
+                title = {
+                    Row(modifier = Modifier
+                        .fillMaxWidth().fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly
 
-        }
-        Row(
-//            horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        Button(
+                            onClick = {navController.navigate(route = Screen.Profile.route)},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)){
+                            Text(
+                                text = "Profile",
+                                style = TextStyle(fontSize = 15.sp),
+                                color = Color.Black
+                            )
+                        }
+                        Button(
+                            onClick = {navController.navigate(route = Screen.IngList.route)},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)) {
+                            Text(
+                                text = "Shopping List",
+                                style = TextStyle(fontSize = 15.sp),
+                                color = Color.White
+                            )
+                        }
+                        Button(
+                            onClick = {navController.navigate(route = Screen.Profile.route)},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)) {
+                            Text(
+                                text = "Friends List",
+                                style = TextStyle(fontSize = 15.sp),
+                                color = Color.White
+                            )
+                        }
+                    }
+                    Text(text = stringResource(id = R.string.app_name)) },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+            )
+        },
+        content = {Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)){
-                Text(
-                    text = "Profile",
-                    style = TextStyle(fontSize = 15.sp),
-                    color = Color.White
-                )
-            }
-            Button(
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)) {
-                Text(
-                    text = "Shopping List",
-                    style = TextStyle(fontSize = 15.sp),
-                    color = Color.White
-                )
-            }
-            Button(
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)) {
-                Text(
-                    text = "Friends List",
-                    style = TextStyle(fontSize = 15.sp),
-                    color = Color.White
-                )
-            }
-        }
-        ProfileImage()
-        Row(
-            modifier = Modifier
-                .fillMaxSize(),
+                .verticalScroll(rememberScrollState())
+                .padding(8.dp)
+        ){
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(8.dp),
+//            horizontalArrangement = Arrangement.SpaceBetween
+//        ){
+//            Text(
+//                text = "Cancel",
+//                modifier = Modifier.clickable{"Cancelled"})
+//            Text(
+//                text = "Save",
+//                modifier = Modifier.clickable{"Profile Updated"}
+//            )
+//
+//        }
+            ProfileImage()
+            Row(
+                modifier = Modifier
+                    .fillMaxSize(),
 //                .padding(start = 4.dp, end = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Text(text = "Name", modifier = Modifier.width(100.dp))
-            TextField(value = name, onValueChange = {name = it})
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "Name", modifier = Modifier.width(100.dp))
+                TextField(value = name, onValueChange = {name = it})
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, end = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "Username", modifier = Modifier.width(100.dp))
+                TextField(value = username, onValueChange = {name = it})
+            }
+            ProgressBar()
+            Challenge()
+            }
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 4.dp, end = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Text(text = "Username", modifier = Modifier.width(100.dp))
-            TextField(value = username, onValueChange = {name = it})
-        }
-        ProgressBar()
-        Challenge()
-    }
+    )
 }
 
 @Composable
