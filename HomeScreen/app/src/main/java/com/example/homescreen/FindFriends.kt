@@ -59,12 +59,93 @@ fun AppBar(onSearchClicked: () -> Unit){
         }
     }
 }
+fun FindFriendsScreen(
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    navController: NavController
+) {
+    var friendsList = remember{ Model.IngList.toMutableStateList<Friend>()}
+    val openDialog = remember{mutableStateOf(false)}
+    var newFriendName by remember { mutableStateOf("")}
+    Scaffold(
+        scaffoldState = scaffoldState,
+        content = {
+
+            Column {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 30.dp)) {
+                    Text(text = "Friends",modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                        .padding(8.dp))
+
+                }
+                Surface(modifier = Modifier.padding(all = Dp(5f))) {
+                    LazyColumn {
+                        itemsIndexed(friendsList) { _, item ->
+                            Row(modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(all = 8.dp)) {
+                                Surface(
+                                    shape = RoundedCornerShape(8.dp),
+                                    elevation = 4.dp,
+                                    modifier = Modifier.clickable(onClick = {
+                                        //navController.navigate(route = Screen.Profile.passID(Model.FriendsList.indexOf(item)))
+                                    })
+                                ) {
+                                    Row(modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(all = 8.dp)) {
+                                        val image = painterResource(R.drawable.user_image)
+                                        Image(
+                                            painter = image,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .wrapContentSize()
+                                                .clickable {},
+                                            contentScale = ContentScale.Crop
+                                        )
+                                        Column (horizontalAlignment = Alignment.End){
+                                            Text(
+                                                text = item.name,
+                                                modifier = Modifier
+                                                    .weight(1f)
+                                                    .align(Alignment.CenterVertically)
+                                                    .padding(8.dp)
+                                            )
+                                            Text(
+                                                text = item.distance.toString() + "miles",
+                                                modifier = Modifier
+                                                    .weight(1f)
+                                                    .align(Alignment.CenterVertically)
+                                                    .padding(8.dp)
+                                            )
+                                        }
+                                        Button(
+                                            onClick = {navController.navigate(route = Screen.FriendRequestConfirmation.route)},
+                                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)){
+                                            Text(
+                                                text = "Add Friend",
+                                                style = TextStyle(fontSize = 15.sp),
+                                                color = Color.White
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    )
+}
 
 @Composable
 @Preview(showBackground = true)
 
 fun FindFriendsPreview(){
-    FindFriends(
+    FindFriendsScreen(
         navController = rememberNavController()
     )
 }
