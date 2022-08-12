@@ -50,6 +50,21 @@ fun SetupNavGraph(navController: NavHostController){
         ){
             AddStuff(navController = navController)
         }
+        composable(
+            route = Screen.FriendsList.route
+        ){
+            FriendsList(navController = navController)
+        }
+        composable(
+            route = Screen.FriendsRequestConfirm.route
+        ){
+            FriendRequestConfirmation(navController = navController)
+        }
+        composable(
+            route = Screen.FindFriends.route
+        ){
+            FindFriends(navController = navController)
+        }
 
     }
 }
