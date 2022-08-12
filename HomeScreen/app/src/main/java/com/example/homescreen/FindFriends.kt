@@ -45,7 +45,7 @@ fun FindFriends(navController: NavController){
 }
 
 @Composable
-fun AppBar(onSearchClicked: () -> Unit){
+fun AppBar2(onSearchClicked: () -> Unit){
     TopAppBar(
         backgroundColor = MaterialTheme.colors.primaryVariant,
     ) {

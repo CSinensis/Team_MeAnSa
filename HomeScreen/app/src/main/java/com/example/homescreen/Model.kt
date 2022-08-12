@@ -96,3 +96,8 @@ object People{
     var person2 = Person("MeAnSa", "meansa2025","Bring personal bag when buying foods")
 
 }
+
+data class Friend(
+    val name: String
+
+)

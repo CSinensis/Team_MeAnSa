@@ -3,6 +3,7 @@ package com.example.signinscreen
 import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
@@ -191,10 +192,11 @@ fun ProgressBar(){
 }
 
 @Composable
-fun Challenge(){
-    fun Challenge(){
-        Column(modifier = Modifier
-            .padding(12.dp),
+fun Challenge() {
+    fun Challenge() {
+        Column(
+            modifier = Modifier
+                .padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
 //        .fillMaxSize(),
 //    horizontalAlignment = Alignment.CenterHorizontally
@@ -226,10 +228,12 @@ fun Challenge(){
             Button(
                 onClick = {},
                 shape = CutCornerShape(10),
-                colors = ButtonDefaults.buttonColors(backgroundColor = MainColor))
+                colors = ButtonDefaults.buttonColors(backgroundColor = MainColor)
+            )
 
             {
-                Text(text = "Add Challenges to Yourself",color = Color.White)}
+                Text(text = "Add Challenges to Yourself", color = Color.White)
+            }
         }
     }
 
@@ -256,9 +260,9 @@ fun Challenge(){
             )
         }
     }
+}
 
-
-    @Preview(showBackground = true)
+@Preview(showBackground = true)
 
 @Composable
 fun ProfilePreview() {
