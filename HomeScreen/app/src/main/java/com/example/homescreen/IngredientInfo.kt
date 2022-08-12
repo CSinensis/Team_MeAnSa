@@ -31,9 +31,12 @@ fun IngredientInfo(navController: NavController, ING_INDEX: Int){
             )
         },
         content = {
-                  Column(modifier = Modifier.fillMaxSize().padding(15.dp)) {
-                      Box(modifier = Modifier.size(height=300.dp,width=300.dp)
-                          .background(color=Color.LightGray)){
+                  Column(modifier = Modifier
+                      .fillMaxSize()
+                      .padding(15.dp)) {
+                      Box(modifier = Modifier
+                          .size(height = 300.dp, width = 300.dp)
+                          .background(color = Color.LightGray)){
 
                       }
                       Divider(
