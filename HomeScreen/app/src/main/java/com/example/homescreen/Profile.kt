@@ -36,8 +36,8 @@ fun ProfileScreen(navController: NavController,scaffoldState: ScaffoldState = re
         Toast.makeText(LocalContext.current, notification.value, Toast.LENGTH_LONG).show()
         notification.value = ""
     }
-    var name by rememberSaveable{ mutableStateOf("default name")}
-    var username by rememberSaveable{mutableStateOf("default username")}
+//    var name by rememberSaveable{ mutableStateOf("default name")}
+//    var username by rememberSaveable{mutableStateOf("default username")}
     Scaffold(scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
@@ -102,24 +102,6 @@ fun ProfileScreen(navController: NavController,scaffoldState: ScaffoldState = re
 //
 //        }
             ProfileImage()
-            Row(
-                modifier = Modifier
-                    .fillMaxSize(),
-//                .padding(start = 4.dp, end = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = "Name", modifier = Modifier.width(100.dp))
-                TextField(value = name, onValueChange = {name = it})
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp, end = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = "Username", modifier = Modifier.width(100.dp))
-                TextField(value = username, onValueChange = {name = it})
-            }
             ProgressBar()
             Challenge()
             }
@@ -130,17 +112,23 @@ fun ProfileScreen(navController: NavController,scaffoldState: ScaffoldState = re
 @Composable
 fun ProfileImage(){
     val painter = painterResource(R.drawable.user_image)
+    var name by rememberSaveable{ mutableStateOf("Type here")}
+    var username by rememberSaveable{mutableStateOf("Type here")}
+    var achievement by rememberSaveable{mutableStateOf("Type here")}
 
-    Column(modifier = Modifier
-        .padding(8.dp)
-        .fillMaxWidth(),
-    horizontalAlignment = Alignment.CenterHorizontally
+//    Column(modifier = Modifier
+//        .padding(8.dp)
+//        .fillMaxWidth(),
+//    horizontalAlignment = Alignment.CenterHorizontally
+//    ){
+    Row(verticalAlignment = Alignment.CenterVertically
     ){
         Card(
             shape = CircleShape,
             modifier = Modifier
                 .padding(8.dp)
-                .size(70.dp)
+                .size(100.dp),
+            border = BorderStroke(1.dp,Color.DarkGray)
         ){
             Image(
                 painter = painter,
@@ -152,8 +140,57 @@ fun ProfileImage(){
             )
 
         }
-    }
-}
+        Column() {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize(),
+//                .padding(start = 4.dp, end = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "Name", modifier = Modifier.width(100.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = {name = it},
+                    trailingIcon = {
+                        IconButton(onClick = {name = ""}) {
+                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                        }
+                    }
+                )
+            }
+
+            Row( modifier = Modifier
+                .fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "Username", modifier = Modifier.width(100.dp))
+                OutlinedTextField(
+                    value = username,
+                    onValueChange = {username = it},
+                    trailingIcon = {
+                        IconButton(onClick = {username = ""}) {
+                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                        }
+                    }
+                )
+            }
+            Row(modifier = Modifier
+                .fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "Achievements", modifier = Modifier.width(100.dp))
+                OutlinedTextField(
+                    value = achievement,
+                    onValueChange = {achievement = it},
+                    trailingIcon = {
+                        IconButton(onClick = {achievement = ""}) {
+                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                        }
+                    }
+                )
+            }
+        }
+
 @Composable
 fun ProgressBar(){
     Column(modifier = Modifier
