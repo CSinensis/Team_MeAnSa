@@ -42,172 +42,16 @@ fun AddStuff(navController: NavController) {
 
     ){}
 
-//   Add Eggs and Bacon
-    Column(modifier = Modifier
-        .padding(40.dp)
-        .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+//        Lazy Column for adding Ingre
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
     ) {
-        Row(
-            modifier = Modifier
-//                    edit here
-                .padding(20.dp)
-                .fillMaxWidth()
-        ) {
-            val checkedStatus1 = remember {
-                mutableStateOf(false)
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Image(
-                    painter = painterResource(id = R.drawable.eggs),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                )
-                Row() {
-                    Checkbox(
-                        checked = checkedStatus1.value,
-                        onCheckedChange = { checkedStatus1.value = it },
-//                        modifier = Modifier.padding(1.dp)
-                    )
-                    Text(
-                        text = "Eggs",
-                        modifier = Modifier.padding(15.dp),
-                        fontSize = 15.sp
-                    )
-                }
-            }
-            Column(horizontalAlignment = Alignment.End) {
-                Image(
-                    painter = painterResource(id = R.drawable.bacon),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                )
-                Row() {
-                    Checkbox(
-                        checked = checkedStatus1.value,
-                        onCheckedChange = { checkedStatus1.value = it},
-//                        modifier = Modifier.padding(5.dp)
-                    )
-                    Text(
-                        text = "Bacon",
-                        modifier = Modifier.padding(15.dp),
-                        fontSize = 15.sp
-                    )
-                }
-            }
-            }
-
-// Add Beef & Corn
-//        Column(modifier = Modifier
-//            .padding(10.dp)
-//            .fillMaxWidth() ){
-//            Row(
-//                modifier = Modifier
-//                    .padding(20.dp)
-//                    .fillMaxWidth()
-//            ) {
-//                val checkedStatus1 = remember {
-//                    mutableStateOf(false)
-//                }
-//                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-//                    Image(
-//                        painter = painterResource(id = R.drawable.bread),
-//                        contentDescription = null,
-//                        modifier = Modifier
-//                            .size(100.dp)
-//                    )
-//                    Row() {
-//                        Checkbox(
-//                            checked = checkedStatus1.value,
-//                            onCheckedChange = { checkedStatus1.value = it },
-////                            modifier = Modifier.padding(5.dp)
-//                        )
-//                        Text(
-//                            text = "Bread",
-//                            modifier = Modifier.padding(15.dp),
-//                            fontSize = 15.sp
-//                        )
-//                    }
-//                }
-//                Column(horizontalAlignment = Alignment.End) {
-//                    Image(
-//                        painter = painterResource(id = R.drawable.lettuce),
-//                        contentDescription = null,
-//                        modifier = Modifier
-//                            .size(100.dp)
-//                    )
-//                    Row() {
-//                        Checkbox(
-//                            checked = checkedStatus1.value,
-//                            onCheckedChange = { checkedStatus1.value = it },
-////                            modifier = Modifier.padding(5.dp)
-//                        )
-//                        Text(
-//                            text = "Lettuce",
-//                            modifier = Modifier.padding(15.dp),
-//                            fontSize = 15.sp
-//                        )
-//                    }
-//                }
-//            }
-//// Add lettuce and bread
-//            Column(modifier = Modifier
-//                .padding(10.dp)
-//                .fillMaxWidth()) {
-//                Row(
-//                    modifier = Modifier
-//                        .padding(20.dp)
-//                        .fillMaxWidth()
-//                ) {
-//                    val checkedStatus1 = remember {
-//                        mutableStateOf(false)
-//                    }
-//                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-//                        Image(
-//                            painter = painterResource(id = R.drawable.beef),
-//                            contentDescription = null,
-//                            modifier = Modifier
-//                                .size(100.dp)
-//                        )
-//                        Row() {
-//                            Checkbox(
-//                                checked = checkedStatus1.value,
-//                                onCheckedChange = { checkedStatus1.value = it },
-////                            modifier = Modifier.padding(5.dp)
-//                            )
-//                            Text(
-//                                text = "Beef",
-//                                modifier = Modifier.padding(15.dp),
-//                                fontSize = 15.sp
-//                            )
-//                        }
-//                    }
-//                    Column(horizontalAlignment = Alignment.End) {
-//                        Image(
-//                            painter = painterResource(id = R.drawable.corn),
-//                            contentDescription = null,
-//                            modifier = Modifier
-//                                .size(100.dp)
-//                        )
-//                        Row() {
-//                            Checkbox(
-//                                checked = checkedStatus1.value,
-//                                onCheckedChange = { checkedStatus1.value = it },
-////                            modifier = Modifier.padding(5.dp)
-//                            )
-//                            Text(
-//                                text = "Corn",
-//                                modifier = Modifier.padding(15.dp),
-//                                fontSize = 15.sp
-//                            )
-//                        }
-//                    }
-//                }
-//            }
-//
-//            }
+        items(addableList) { model ->
+            com.example.signinscreen.ui.theme.ListRow(model = model)
+        }
+    }
         Box(
             Modifier
                 .size(400.dp, 220.dp)
@@ -305,6 +149,38 @@ fun AppBar(onSearchClicked: () -> Unit){
             }
         }
     }
+}
+@Composable
+fun ListRow(model: Addable) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
+    ) {
+        val checkedStatus = remember {
+            mutableStateOf(false)
+        }
+        Checkbox(
+            checked = checkedStatus.value,
+            onCheckedChange = { checkedStatus.value = it },
+            modifier = Modifier.padding(1.dp)
+        )
+        Image(
+            painter = painterResource(id = model.drawableID),
+            contentDescription = "",
+            modifier = Modifier
+                .size(120.dp)
+                .padding(10.dp)
+        )
+        Text(
+            text = model.name,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color.Black
+        )
+    }
+}
 }
 
 @Preview(showBackground = true)
