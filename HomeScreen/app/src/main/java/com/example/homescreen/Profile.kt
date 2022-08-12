@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.homescreen.Person
 import com.example.homescreen.R
 import com.example.homescreen.Screen
 
@@ -110,7 +109,7 @@ fun ProfileScreen(navController: NavController,scaffoldState: ScaffoldState = re
 }
 
 @Composable
-fun ProfileImage(person: Person) {
+fun ProfileImage() {
     val painter = painterResource(R.drawable.user_image)
     var name by rememberSaveable { mutableStateOf("Type here") }
     var username by rememberSaveable { mutableStateOf("Type here") }
@@ -148,7 +147,7 @@ fun ProfileImage(person: Person) {
 //                .padding(start = 4.dp, end = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = person.name, modifier = Modifier.width(100.dp))
+                Text(text = "Name", modifier = Modifier.width(100.dp))
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },

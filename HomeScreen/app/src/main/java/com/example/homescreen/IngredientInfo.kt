@@ -41,6 +41,18 @@ fun IngredientInfo(navController: NavController, ING_INDEX: Int){
                 fontSize = MaterialTheme.typography.h3.fontSize,
                 fontWeight = FontWeight.Bold
             )
+            Text(
+                text = name,
+                color = MaterialTheme.colors.primary,
+                fontSize = MaterialTheme.typography.h3.fontSize,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = item.carbonFootprint.toString(),
+                color = MaterialTheme.colors.primary,
+                fontSize = MaterialTheme.typography.h3.fontSize,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
