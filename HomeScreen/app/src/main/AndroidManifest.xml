@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeScreen"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDzljHgzTfW-dQL5N0CSide1RtvSmM1v1s" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

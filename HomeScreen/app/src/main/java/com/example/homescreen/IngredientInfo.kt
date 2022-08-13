@@ -16,14 +16,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 
 fun IngredientInfo(navController: NavController, ING_INDEX: Int){
     val item = Model.IngList[ING_INDEX]
-    val name = item.productName
-
+    val markers = item.mapLocations
+    val center = LatLng(39.8, -98.5)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(center, 2f)
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -43,11 +52,28 @@ fun IngredientInfo(navController: NavController, ING_INDEX: Int){
                       Text(text = "Item Name: ${item.productName}",
                       fontWeight = FontWeight.Bold,
                       fontSize = 24.sp,
-                      modifier = Modifier.padding(start = 15.dp))
+                      modifier = Modifier.padding(start = 15.dp,bottom = 15.dp))
                       Box(modifier = Modifier
-                          .size(height = 300.dp, width = 300.dp)
-                          .background(color = Color.LightGray)){
-
+                          .size(height = 350.dp, width = 330.dp)
+                          .background(color = Color.LightGray).align(Alignment.CenterHorizontally)
+                      ){
+                          GoogleMap(
+                              modifier = Modifier.fillMaxSize(),
+                              cameraPositionState = cameraPositionState
+                          ){
+                              Marker(
+                                  state = MarkerState(position = LatLng(markers[0].lat,markers[0].long)),
+                                  title = markers[0].title
+                              )
+                              Marker(
+                                  state = MarkerState(position = LatLng(markers[1].lat,markers[1].long)),
+                                  title = markers[1].title
+                              )
+                              Marker(
+                                  state = MarkerState(position = LatLng(markers[2].lat,markers[2].long)),
+                                  title = markers[2].title
+                              )
+                          }
                       }
                       Divider(
                           color = Color.Black,
@@ -74,7 +100,8 @@ fun IngredientInfo(navController: NavController, ING_INDEX: Int){
                                   fontSize = 19.sp)
                               Text(text = "Total",
                                   fontSize = 19.sp,
-                                  fontWeight = FontWeight.Bold)
+                                  fontWeight = FontWeight.Bold
+                              )
                           }
                           Column(modifier = Modifier.fillMaxWidth(),horizontalAlignment = Alignment.CenterHorizontally) {
                               Text(text = "${item.farm}g",

@@ -144,8 +144,9 @@ fun editIngList(newIngName: String,newIngQuant: String){
     val other: Double = FootprintData.otherCost[newIngName]!!*newQuant
     val total = farm + process + transport + other
     val carbonFootprint = total.toLong()
+    val mapRef = FootprintData.locations[newIngName]!!
     val newIng = Ingredient(newIngName,newQuant,carbonFootprint = carbonFootprint,
-        farm = farm.toLong(), process = process.toLong(), transport = transport.toLong(), other = other.toLong())
+        farm = farm.toLong(), process = process.toLong(), transport = transport.toLong(), other = other.toLong(),mapLocations = mapRef)
     Model.IngList = Model.IngList + listOf(newIng)
 }
 

@@ -1,7 +1,5 @@
 package com.example.homescreen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,10 +18,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import kotlin.math.round
 
 @Composable
 fun ProductListCurrentScreen(
@@ -69,7 +66,7 @@ fun ProductListCurrentScreen(
                             Text(
                                 text = "Friends List",
                                 style = TextStyle(fontSize = 18.sp),
-                                color = Color.White
+                                color = Color(red = 0, blue = 0, green = 0)
                             )
                         }
                     }
@@ -82,7 +79,7 @@ fun ProductListCurrentScreen(
             Column {
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 30.dp)) {
+                    .padding(top = 8.dp, bottom = 8.dp, start = 50.dp, end = 30.dp)) {
                     Text(text = "Produce Name",modifier = Modifier
                         .weight(1f)
                         .align(Alignment.CenterVertically)
@@ -111,11 +108,23 @@ fun ProductListCurrentScreen(
                                     elevation = 4.dp,
                                     modifier = Modifier.clickable(onClick = {
                                         navController.navigate(route = Screen.IngredientInfo.passID(Model.IngList.indexOf(item)))
-                                    })
+                                    }),
+                                    color = Color(red = getColor(item.carbonFootprint)[0],
+                                        green = getColor(item.carbonFootprint)[1],
+                                        blue = getColor(item.carbonFootprint)[2],)
                                 ) {
                                     Row(modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(all = 8.dp)) {
+                                        val checkedStatus = remember {
+                                            mutableStateOf(false)
+                                        }
+                                        Checkbox(
+                                            checked = checkedStatus.value,
+                                            onCheckedChange = { checkedStatus.value = it
+                                            },
+                                            modifier = Modifier.padding(1.dp)
+                                        )
                                         Text(
                                             text = item.productName,
                                             modifier = Modifier
@@ -161,7 +170,7 @@ fun ProductListCurrentScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {navController.navigate(route = Screen.AddIngredient.route)},
-                backgroundColor = MaterialTheme.colors.secondary,
+                backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
                 content = { Icon(ImageVector.vectorResource(R.drawable.plus), "") }
             )
@@ -170,136 +179,34 @@ fun ProductListCurrentScreen(
     )
 }
 
-//@Composable
-//private fun ScreenBody() {
-//    when (val result = AmbientScreenState.current.productListUi) {
-//        is ResultStatus.Loading -> LoadingScreen()
-//        is ResultStatus.Success -> SuccessScreen(result.data)
-//        is ResultStatus.Error -> ErrorScreen()
-//    }
-//}
-
-//@Composable
-//private fun LoadingScreen() {
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ) { CircularProgressIndicator() }
-//}
-
-//@Composable
-//private fun SuccessScreen(productList: List<Ingredient>?) {
-//
-//    Column(
-//        Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp, 8.dp, 8.dp, 96.dp)
-//            .verticalScroll(rememberScrollState())
-//    ) {
-//        productList?.forEach { post -> ProductCurrentItem(post) }
-//    }
-//}
-
-
-//@Composable
-//private fun ErrorScreen() {
-//    EmptyScreen(
-//        R.string.empty_view_product_list_title,
-//        R.string.empty_view_product_list_subtitle_text
-//    )
-//}
-
-@Composable
-private fun Fab() {
-    val openDialog = remember{mutableStateOf(true) }
-    FloatingActionButton(
-        onClick = {},
-        backgroundColor = MaterialTheme.colors.secondary,
-        contentColor = contentColorFor(MaterialTheme.colors.onSecondary),
-        content = { Icon(ImageVector.vectorResource(R.drawable.plus), "") }
-    )
+fun getColor(footprint:Long): List<Int>{
+    val color1 = listOf(230, 0, 0)
+    val color2 = listOf(0, 230, 0)
+    val color3 = listOf(255,255,0)
+    val w = footprint/1000.toDouble()
+    if (footprint > 1000){
+        return color1
+    }
+    else if (footprint in 200..500){
+        return mix(w,color3,color2)
+    }
+    else if (footprint in 500..800){
+        return mix(w,color1,color3)
+    }
+    else {
+        return mix(w,color1,color2)
+    }
 }
 
-
-// on below line we are creating a pop up window dialog method
-@Composable
-fun PopupWindowDialog() {
-    val openDialog = remember{mutableStateOf(false) }
-    val buttonTitle = remember{mutableStateOf("Show Pop Up")}
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            onClick = {
-                openDialog.value = !openDialog.value
-                if (!openDialog.value) {
-                    buttonTitle.value = "Show Pop Up"
-                }
-            }
-        ) {
-            Text(text = buttonTitle.value, modifier = Modifier.padding(3.dp))
-        }
-        Box {
-            val popupWidth = 300.dp
-            val popupHeight = 100.dp
-            if (openDialog.value) {
-                buttonTitle.value = "Hide Pop Up"
-                // on below line we are adding pop up
-                Popup(
-                    // on below line we are adding
-                    // alignment and properties.
-                    alignment = Alignment.TopCenter,
-                    properties = PopupProperties()
-                ) {
-
-                    // on the below line we are creating a box.
-                    Box(
-                        // adding modifier to it.
-                        Modifier
-                            .size(popupWidth, popupHeight)
-                            .padding(top = 5.dp)
-                            // on below line we are adding background color
-                            .background(
-                                MaterialTheme.colors.primaryVariant,
-                                RoundedCornerShape(10.dp)
-                            )
-                            // on below line we are adding border.
-                            .border(1.dp, color = Color.Black, RoundedCornerShape(10.dp))
-                    ) {
-
-                        // on below line we are adding column
-                        Column(
-                            // on below line we are adding modifier to it.
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 20.dp),
-                            // on below line we are adding horizontal and vertical
-                            // arrangement to it.
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            // on below line we are adding text for our pop up
-                            Text(
-                                text = "Welcome to Geeks for Geeks",
-                                color = Color.White,
-                                // on below line we are adding padding to it
-                                modifier = Modifier.padding(vertical = 5.dp),
-                                // on below line we are adding font size.
-                                fontSize = 16.sp
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
+fun mix(w: Double,color1:List<Int>,color2:List<Int>):List<Int>{
+    var w1 = w
+    var w2 = 1 - w1
+    var rgb = listOf(
+        round((color1[0] * w1 + color2[0] * w2).toDouble()).toInt(),
+        round((color1[1] * w1 + color2[1] * w2).toDouble()).toInt(),
+        round((color1[2] * w1 + color2[2] * w2).toDouble()).toInt()
+    )
+    return rgb
 }
 
 

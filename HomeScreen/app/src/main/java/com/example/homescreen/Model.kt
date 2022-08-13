@@ -21,7 +21,8 @@ data class Ingredient (
     val farm: Long = 2,
     val process: Long = 2,
     val transport: Long = 2,
-    val other: Long = 2
+    val other: Long = 2,
+    val mapLocations: List<mapRef> = listOf(FootprintData.bm1,FootprintData.bm2,FootprintData.bm3)
 )
 
 
@@ -148,7 +149,7 @@ object FootprintData{
         "Cheese" to 0.74,
         "Coffee" to 0.613,
         "Chocolate" to 0.334,
-        "Eggs" to 0,
+        "Eggs" to 0.001,
         "Fish" to 0.045,
         "Corn" to 0.078,
         "Milk" to 0.154,
@@ -182,4 +183,18 @@ object FootprintData{
         "Rice" to 0.759
     )
 
+    val bm1 = mapRef("Texas (1)", 31.96, -99.9)
+    val bm2 = mapRef("Oklahoma (2)", 35.0,-97.0)
+    val bm3 = mapRef("Missouri (3)", 37.96,-91.8318)
+    val locations = mapOf(
+        "Beef" to listOf(bm1,bm2,bm3),
+        "Eggs" to listOf(bm1,bm2,bm3),
+        "Apples" to listOf(bm1,bm2,bm3)
+    )
 }
+
+data class mapRef(
+    val title: String,
+    val lat: Double,
+    val long: Double
+)
