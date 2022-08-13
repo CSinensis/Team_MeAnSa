@@ -13,7 +13,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,7 +54,7 @@ fun AddStuff(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.White)
-                        .height(480.dp)
+                        .height(400.dp)
                 ) {
                     itemsIndexed(addList){ _, model ->
                         ListRow(model = model)
@@ -118,23 +120,36 @@ fun AddStuff(navController: NavController) {
                     Text(text = "Add Items to Shopping List",color = Color.White) }
             }
 
+        },
+    bottomBar = {
+            TopAppBar(
+                title = { Text(text = "Back to List") },
+                backgroundColor = MaterialTheme.colors.primary,
+                navigationIcon = {
+                    IconButton(onClick = {navController.navigate(route = Screen.IngList.route)}) {
+                        Icon(ImageVector.vectorResource(R.drawable.arrow), "")
+                    }
+                }
+            )
         }
-
     )
-
-    }
+}
 
 
 fun editIngList(newIngName: String,newIngQuant: String){
     val newQuant = newIngQuant.toLong()
-    val carbonFootprint: Long = getCarbonFootprint(newIngName,newQuant)
-    val newIng = Ingredient(newIngName,newQuant,carbonFootprint)
+    val farm: Double = FootprintData.farmingCost[newIngName]!!*newQuant
+    val process: Double = (FootprintData.processingCost[newIngName] as Double)*newQuant
+    val transport: Double = FootprintData.transportCost[newIngName]!!*newQuant
+    val other: Double = FootprintData.otherCost[newIngName]!!*newQuant
+    val total = farm + process + transport + other
+    val carbonFootprint = total.toLong()
+    val newIng = Ingredient(newIngName,newQuant,carbonFootprint = carbonFootprint,
+        farm = farm.toLong(), process = process.toLong(), transport = transport.toLong(), other = other.toLong())
     Model.IngList = Model.IngList + listOf(newIng)
 }
 
-fun getCarbonFootprint(newIngName: String, newQuant: Long): Long{
-    return 10.toLong()
-}
+
 @Composable
 fun AppBar(onSearchClicked: () -> Unit){
     TopAppBar(
@@ -177,7 +192,7 @@ fun ListRow(model: Addable) {
         }
         Checkbox(
             checked = checkedStatus.value,
-            onCheckedChange = { checkedStatus.value = it },
+            onCheckedChange = { checkedStatus.value = it},
             modifier = Modifier.padding(1.dp)
         )
         Image(

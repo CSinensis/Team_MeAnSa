@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -25,23 +24,6 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-
-@Composable
-
-fun IngList(navController: NavController){
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center){
-        Text(
-            modifier = Modifier.clickable {
-                navController.navigate(route = Screen.Home.route)
-            },
-            text = "Detail",
-            color = MaterialTheme.colors.primary,
-            fontSize = MaterialTheme.typography.h3.fontSize,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
 
 @Composable
 fun ProductListCurrentScreen(
@@ -68,7 +50,7 @@ fun ProductListCurrentScreen(
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)){
                             Text(
                                 text = "Profile",
-                                style = TextStyle(fontSize = 15.sp),
+                                style = TextStyle(fontSize = 18.sp),
                                 color = Color.White
                             )
                         }
@@ -77,16 +59,16 @@ fun ProductListCurrentScreen(
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
                             Text(
                                 text = "Shopping List",
-                                style = TextStyle(fontSize = 15.sp),
+                                style = TextStyle(fontSize = 18.sp),
                                 color = Color.Black
                             )
                         }
                         Button(
-                            onClick = {navController.navigate(route = Screen.Profile.route)},
+                            onClick = {navController.navigate(route = Screen.FriendsList.route)},
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)) {
                             Text(
                                 text = "Friends List",
-                                style = TextStyle(fontSize = 15.sp),
+                                style = TextStyle(fontSize = 18.sp),
                                 color = Color.White
                             )
                         }
@@ -104,15 +86,18 @@ fun ProductListCurrentScreen(
                     Text(text = "Produce Name",modifier = Modifier
                         .weight(1f)
                         .align(Alignment.CenterVertically)
-                        .padding(8.dp))
+                        .padding(8.dp),
+                        fontSize =  19.sp)
                     Text(text = "Quantity",modifier = Modifier
                         .weight(1f)
                         .align(Alignment.CenterVertically)
-                        .padding(8.dp))
+                        .padding(8.dp),
+                        fontSize =  19.sp)
                     Text(text = "Carbon Footprint",modifier = Modifier
                         .weight(1f)
                         .align(Alignment.CenterVertically)
-                        .padding(8.dp))
+                        .padding(8.dp),
+                        fontSize =  19.sp)
 
                 }
                 Surface(modifier = Modifier.padding(all = Dp(5f))) {
@@ -136,21 +121,24 @@ fun ProductListCurrentScreen(
                                             modifier = Modifier
                                                 .weight(1f)
                                                 .align(Alignment.CenterVertically)
-                                                .padding(8.dp)
+                                                .padding(8.dp),
+                                            fontSize =  19.sp
                                         )
                                         Text(
                                             text = item.productQuantity.toString(),
                                             modifier = Modifier
                                                 .weight(1f)
                                                 .align(Alignment.CenterVertically)
-                                                .padding(8.dp)
+                                                .padding(8.dp),
+                                            fontSize =  19.sp
                                         )
                                         Text(
                                             text = item.carbonFootprint.toString(),
                                             modifier = Modifier
                                                 .weight(1f)
                                                 .align(Alignment.CenterVertically)
-                                                .padding(8.dp)
+                                                .padding(8.dp),
+                                            fontSize =  19.sp
                                         )
                                         Column(horizontalAlignment = Alignment.End) {
                                             IconButton(onClick = {
@@ -318,6 +306,5 @@ fun PopupWindowDialog() {
 @Composable
 @Preview(showBackground = true)
 fun IngListPreview(){
-    IngList(navController = rememberNavController())
     ProductListCurrentScreen(navController = rememberNavController())
 }

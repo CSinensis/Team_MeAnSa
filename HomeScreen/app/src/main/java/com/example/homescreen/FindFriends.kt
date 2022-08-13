@@ -8,10 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -79,9 +76,10 @@ fun FindFriendsScreen(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     navController: NavController
 ) {
-    var friendsList = remember{ Model.IngList.toMutableStateList<Friend>()}
+    var friendsList = remember{FriendList.friendList.toMutableStateList<Person>()}
     val openDialog = remember{mutableStateOf(false)}
     var newFriendName by remember { mutableStateOf("")}
+
     Scaffold(
         scaffoldState = scaffoldState,
         content = {
@@ -126,14 +124,14 @@ fun FindFriendsScreen(
                                                 text = item.name,
                                                 modifier = Modifier
                                                     .weight(1f)
-                                                    .align(Alignment.CenterVertically)
+//                                                    .align(Alignment.CenterVertically)
                                                     .padding(8.dp)
                                             )
                                             Text(
                                                 text = item.distance.toString() + "miles",
                                                 modifier = Modifier
                                                     .weight(1f)
-                                                    .align(Alignment.CenterVertically)
+//                                                    .align(Alignment.CenterVertically)
                                                     .padding(8.dp)
                                             )
                                         }

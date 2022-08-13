@@ -1,6 +1,8 @@
 package com.example.homescreen
 
 const val ING_INDEX = "id"
+const val PERSON = "id"
+const val CHAL = "id"
 
 sealed class Screen(val route: String) {
     object Home: Screen(route = "home_screen")
@@ -16,5 +18,15 @@ sealed class Screen(val route: String) {
     object FindFriends: Screen(route = "find_friends")
     object FriendsRequestConfirm: Screen(route = "friend_request_confirmation")
     object FriendsList: Screen(route = "friends_list")
+    object FriendProfile: Screen(route = "friend_profile/{$PERSON}"){
+        fun passFriendID(id:Int):String{
+            return "friend_profile/$id"
+        }
+    }
+    object AddChallenge: Screen(route = "add_challenges/{$CHAL}"){
+        fun passChalID(id:Int):String{
+            return "add_challenges/$id"
+        }
+    }
 
 }
