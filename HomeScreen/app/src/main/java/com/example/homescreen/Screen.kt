@@ -13,5 +13,8 @@ sealed class Screen(val route: String) {
     }
     object Profile: Screen(route = "profile")
     object AddIngredient: Screen(route = "add_ingredient")
+    object FindFriends: Screen(route = "find_friends")
+    object FriendsRequestConfirm: Screen(route = "friend_request_confirmation")
+    object FriendsList: Screen(route = "friends_list")
 
 }

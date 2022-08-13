@@ -1,4 +1,5 @@
 package com.example.homescreen
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -12,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 
 fun IngredientInfo(navController: NavController, ING_INDEX: Int){
@@ -31,9 +33,12 @@ fun IngredientInfo(navController: NavController, ING_INDEX: Int){
             )
         },
         content = {
-                  Column(modifier = Modifier.fillMaxSize().padding(15.dp)) {
-                      Box(modifier = Modifier.size(height=300.dp,width=300.dp)
-                          .background(color=Color.LightGray)){
+                  Column(modifier = Modifier
+                      .fillMaxSize()
+                      .padding(15.dp)) {
+                      Box(modifier = Modifier
+                          .size(height = 300.dp, width = 300.dp)
+                          .background(color = Color.LightGray)){
 
                       }
                       Divider(
@@ -42,6 +47,20 @@ fun IngredientInfo(navController: NavController, ING_INDEX: Int){
                           modifier = Modifier
                               .padding(15.dp)
                       )
+                      Row(){
+                          Column() {
+                              Text(text = "Land Use and Farming")
+                              Text(text = "Processing")
+                              Text(text = "Transport")
+                              Text(text = "Retail, Packaging, Losses")
+                          }
+                          Column() {
+                              Text(text = "10g")
+                              Text(text = "10g")
+                              Text(text = "10g")
+                              Text(text = "10g")
+                          }
+                      }
                       Divider(
                           color = Color.Black,
                           thickness = 2.dp,
