@@ -73,6 +73,10 @@ fun IngredientInfo(navController: NavController, ING_INDEX: Int){
                                   state = MarkerState(position = LatLng(markers[2].lat,markers[2].long)),
                                   title = markers[2].title
                               )
+                              Marker(
+                                  state = MarkerState(position = LatLng(markers[3].lat,markers[3].long)),
+                                  title = markers[2].title
+                              )
                           }
                       }
                       Divider(

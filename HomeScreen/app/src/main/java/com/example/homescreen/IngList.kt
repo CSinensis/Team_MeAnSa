@@ -85,12 +85,12 @@ fun ProductListCurrentScreen(
                         .align(Alignment.CenterVertically)
                         .padding(8.dp),
                         fontSize =  19.sp)
-                    Text(text = "Quantity",modifier = Modifier
+                    Text(text = "Quantity (g)",modifier = Modifier
                         .weight(1f)
                         .align(Alignment.CenterVertically)
                         .padding(8.dp),
                         fontSize =  19.sp)
-                    Text(text = "Carbon Footprint",modifier = Modifier
+                    Text(text = "Carbon Footprint (g)",modifier = Modifier
                         .weight(1f)
                         .align(Alignment.CenterVertically)
                         .padding(8.dp),

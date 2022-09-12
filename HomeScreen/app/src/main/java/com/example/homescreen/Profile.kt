@@ -183,7 +183,7 @@ fun ProgressBar(person:Person){
         backgroundColor = Color.LightGray
     )
     Text(
-        text = "60lbs",
+        text = "60kg",
         fontWeight = FontWeight.Bold,
         color = Color.Red,
         modifier = Modifier

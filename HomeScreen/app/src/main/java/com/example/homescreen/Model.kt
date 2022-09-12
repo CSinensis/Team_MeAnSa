@@ -3,14 +3,20 @@ package com.example.homescreen
 import androidx.compose.runtime.mutableStateListOf
 
 object Model{
-    val ing1 = Ingredient("hi",1,1)
-    val ing2 = Ingredient("hi",1,1)
-    val ing3 = Ingredient("hi",1,1)
-    val ing4 = Ingredient("hi",1,1)
-    val ing5 = Ingredient("hi",1,1)
-    val ing6 = Ingredient("hi",1,1)
+    val ap1 = mapRef("Michigan",44.31,-85.6)
+    val ap2 = mapRef("Pennsylvania",41.2,-77.19)
+    val ap3 = mapRef("California",36.778,-119.41)
+    val ap4 = mapRef("Virginia",37.43,-78.67)
+    val appleList = listOf(ap1,ap2,ap3,ap4)
+    val ing1 = Ingredient("Apples",25,
+        10.71.toLong(),farm = 4.921.toLong(),0.095.toLong(),2.395.toLong(),3.298.toLong(),
+        mapLocations = appleList)
+    val ing2 = Ingredient("Milk",100,
+        315.17.toLong())
+    val ing3 = Ingredient("Rice",120,534.20.toLong())
+    val ing4 = Ingredient("Fish",50,681.62.toLong())
 
-    var IngList: List<Ingredient> = mutableStateListOf(ing1,ing2,ing3,ing4,ing5,ing6)
+    var IngList: List<Ingredient> = mutableStateListOf(ing1,ing2,ing3,ing4)
 //        mutableListOf()
 }
 
@@ -22,7 +28,7 @@ data class Ingredient (
     val process: Long = 2,
     val transport: Long = 2,
     val other: Long = 2,
-    val mapLocations: List<mapRef> = listOf(FootprintData.bm1,FootprintData.bm2,FootprintData.bm3)
+    val mapLocations: List<mapRef> = listOf(FootprintData.bm1,FootprintData.bm2,FootprintData.bm3,FootprintData.bm3)
 )
 
 
@@ -112,7 +118,7 @@ object People{
         "achaudhary0204",
         "I recycle leftovers every week!",
         Challenges.ChallengeList1,
-        profilePic = R.drawable.beef,
+        profilePic = R.drawable.acpfp,
         pastChallengeList = Challenges.pastChallengeList1
     )
     var person2 = Person(
@@ -186,9 +192,16 @@ object FootprintData{
     val bm1 = mapRef("Texas (1)", 31.96, -99.9)
     val bm2 = mapRef("Oklahoma (2)", 35.0,-97.0)
     val bm3 = mapRef("Missouri (3)", 37.96,-91.8318)
+    val bm4 = mapRef("South Dakota (4)", 43.97,99.901)
+
+    val eg1 = mapRef("Iowa (1)",41.87,-93.09)
+    val eg2 = mapRef("Ohio (2)",40.42,-82.9)
+    val eg3 = mapRef("Indiana (3)",40.27,-87.13)
+    val eg4 = mapRef("Texas (4)", 31.96, -99.9)
+
     val locations = mapOf(
-        "Beef" to listOf(bm1,bm2,bm3),
-        "Eggs" to listOf(bm1,bm2,bm3),
+        "Beef" to listOf(bm1,bm2,bm3,bm4),
+        "Eggs" to listOf(eg1,eg2,eg3,eg4),
         "Apples" to listOf(bm1,bm2,bm3)
     )
 }
